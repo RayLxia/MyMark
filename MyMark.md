@@ -1765,7 +1765,7 @@ C:\Users\Ray丶X\AppData\Roaming\npm
 
 解绑hover事件,使用jQuery的 jQuery对象.unbind("mouseenter mouseleave")即可;
 
-#web常出现的问题及解决方案
+#移动web常出现的问题及解决方案
 
 ## 1.安卓浏览器看背景图片，有些设备会模糊
 
@@ -1926,7 +1926,7 @@ user-scalable=0,有的人也写成user-scalable=no
 
 - 图片尺寸可以设定为57*57（px）或者Retina可以定为114*114（px），ipad尺寸为72*72（px)
 
-## 13.、唤起select的option展开
+## 13.唤起select的option展开
 
 - 原生js方式
 
@@ -1943,4 +1943,49 @@ user-scalable=0,有的人也写成user-scalable=no
 
 ```css
 	$(sltElement).trigger("mousedown");
+```
+
+## 14.适配各种手机端的字体单位
+
+### 网页链接
+This is an [example link](http://www.imooc.com/article/1115)
+```css
+	html {
+		font-size:10px
+	} 
+	@media screen and (min-width:480px) and (max-width:639px) { 
+		html { 
+			font-size: 15px 
+		} 
+	} 
+	@media screen and (min-width:640px) and (max-width:719px) { 
+		html { 
+			font-size: 20px 
+		} 
+	} 
+	@media screen and (min-width:720px) and (max-width:749px) { 
+		html { 
+			font-size: 22.5px 
+		} 
+	} 
+	@media screen and (min-width:750px) and (max-width:799px) { 
+		html { 
+			font-size: 23.5px 
+		} 
+	} 
+	@media screen and (min-width:800px) and (max-width:959px) { 
+		html { 
+			font-size: 25px 
+		} 
+	} 
+	@media screen and (min-width:960px) and (max-width:1079px) { 
+		html { 
+			font-size: 30px 
+		} 
+	} 
+	@media screen and (min-width:1080px) { 
+		html { 
+			font-size: 32px 
+		} 
+	}
 ```
