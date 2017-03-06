@@ -1,3 +1,58 @@
+# 需要用到的一些cdn
+
+## 使ie支持html5标签和媒体查询
+
+---
+	<!--[if lt IE 9]>
+	<script src="//cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+	<script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+## bootstrap中文网cdn
+
+[http://www.bootcdn.cn/](http://www.bootcdn.cn/)
+
+## 百度cdn
+
+[https://cloud.baidu.com/doc/index.html?title=docs/cplat/libs](https://cloud.baidu.com/doc/index.html?title=docs/cplat/libs)
+
+## 防止加载cdn失败
+
+---
+	<script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+	<script type="text/javascript">  
+	<!--  
+	!window.jQuery && document.write('<script src=/jQuery/jquery-1.9.0.min.js><\/script>'); 
+	//-->  
+	</script>
+	或者
+	<!--  
+	document.write(unescape("%3Cscript src='http://libs.baidu.com/jquery/1.9.0/jquery.min.js' type='text/javascript'%3E%3C/script%3E"));
+	!window.jQuery && document.write(unescape("%3Cscript src='/jQuery/jquery-1.9.0.min.js' type='text/javascript'%3E%3C/script%3E")
+	); //-->
+
+# 移动端head需要引入的meta和link
+
+## 1.顶部状态栏背景色(下方有详细说明)
+
+---
+	<meta name="apple-mobile-web-app-status-bar-style" 			          	  content="black" />
+
+## 2.设置缓存
+
+---
+	<meta http-equiv="Cache-Control" content="no-cache" />
+
+## 3.桌面图标
+
+---
+	<link rel="apple-touch-icon" href="touch-icon-iphone.png" />
+	<link rel="apple-touch-icon" sizes="76x76" href="touch-icon-ipad.png" />
+	<link rel="apple-touch-icon" sizes="120x120" href="touch-icon-iphone-retina.png" />
+	<link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad-retina.png" />
+	去掉图标的默认光泽效果
+	<link rel="apple-touch-icon-precomposed" href="touch-icon-iphone.png" />
+
 # 轮播图
 
 ## 1.轮播图特效的两种方式
@@ -5,14 +60,15 @@
 - 方式1:将ul设置成position: absolute;其父盒子设置成position: relative;ul中的li浮动(float: left;),然后用js改变ul的left值,来进行轮播效果
 - 方式2:利用css3中的transform: translateX();来控制ul的移动,达到轮播效果
 - 方式3:利用函数在屏幕改变时,动态获取的li的高度,并赋给ul的父盒子,此时可以动态给ul添加绝对定位,然后以其left值来做轮播效果
-```css
+
+---
     function resize(){
-     	  var bannerHeight = liList[0].offsetHeight;
+     	var bannerHeight = liList[0].offsetHeight;
       	document.getElementsByClassName("banner")[0].style.height = bannerHeight + "px";
     }
     window.onresize = resize();
     resize();
-```   
+   
 
 注:在移动端中,使用后者较好,因为前者需要给ul的父盒子添加具体的高度,不然移动端ul后面展示的内容会将ul覆盖掉;加了固定高度后,在另一个不同屏幕分辨率的移动端中,显示又会出现问题,所以此时选用方式1;PC端上皆可。
 
@@ -23,12 +79,13 @@
 - 网页服务:apache/nginx/tomcat/iis 
 - 文件上传下载服务:vsftp
 - 邮件服务:posfix
-```
-var qq = {} 
+
+---
+	var qq = {} 
 	qq放到了栈内存(放的东西较小);{}里东西放到了堆内存中(较大)
-qq = null;/free qq;		
+	qq = null;/free qq;		
 	释放了qq这个对象的内存
-```
+
 - 死循环中无限创建变量(对象)会占用内存直至内存耗满,导致电脑死机卡顿
 程序一开始是在磁盘上的,想要运行必须首先加载在内存  	 CPU→内存→磁盘
 
@@ -69,19 +126,20 @@ ssh(远程登录协议)
 	- 弊端:在网站数量多的时候,更新维护不方便
 - 动态网站
 	- 原理:动态生成html页面	
-```	
-php命名方法和js一样;php中连接字符串是.. 不是js中的++
-<?php 
-$flag = $_GET['param'];
-if($flag==1){
+
+---	
+	php命名方法和js一样;php中连接字符串是.. 不是js中的++
+	<?php 
+	$flag = $_GET['param'];
+		if($flag==1){
 	echo "<div>苹果</div>";
-}else if ($flag==2){
-	echo "<div>香蕉</div>";
-}else {
-	echo "<div>橘子</div>";
-}
-?>
-```
+	}else if ($flag==2){
+		echo "<div>香蕉</div>";
+	}else {
+		echo "<div>橘子</div>";
+	}
+	?>
+
 - B/S:browser 浏览器;server 服务器	
 	- 有内容更新,在没有发放到客户端时,可以及时更改
 - C/S:client 客户端(应用程序:qq迅雷);server 服务器  	
@@ -1226,39 +1284,108 @@ i:	表示不区分大小写 /a/i,表示"a"或"A"都满足条件
 	- 快
 	- 节省自己服务器的带宽压力和流量
 - 指令(ng-xxx)
-```css
-<div ng-app ng-init="name='zhangsan'">
-    <p>在此输入内容:</p>
-    <p>姓名:
-        <input type="text" ng-model="name">
-    </p>
-    <p>{{name}}</p>
-</div>
-<script src="js/angular.js"></script>
-ng-app:			告诉AngularJS,div元素是AngularJS,div是ag应用程序管理的边界
-ng-model		双向数据绑定指令,效果是将当前元素的value和模型中的username建立绑定关系
-{{name}}		表达式就是把应用程序变量name绑定到某个段落的innerHTML 默认的是双向绑定;单向绑定是{{::name}}
-ng-controller	当前元素交给控制器控制
-ng-cloak		斗篷 页面加载时,有表达式的标签会先出现表达式,然后再代入数				据,而angular为了改善效果,加了ng-cloak,但是效果不行,所以我				们可以选择ng-cloak的类名给他加个样式隐藏;
-				因为angular为了消除加载时出现表达式的情况,会给表达式的标签加上ng-cloak这个类名,然后去除掉,所以可以使用添加隐藏样式的方法来解决加载出现表达式的现象
-				或者给表达式的标签加上ng-cloak类名,然后加上db也行
-ng-bind			当给元素标签加上这个指令时,相当于在标签中加入了一个表达式				{{}},但是不会出现渲染出{{}}的问题
-				当指令添加的是HTML时,会自动转义,目的是为了安全.防止跨站脚本攻击
-ng-bind-html	这个指令是绑定HTML,同时要去引入angular的另一个包					(angular-sanitize.js),然后再写一个script来将上面的js模				块引入自己的模块中angular.module(自己的模块名,						["ngSanitize"]);但是不建议去使用
-ng-repeat		这个指令用于循环生成元素并绑定数据
+
+---
+	<div ng-app ng-init="name='zhangsan'">
+    	<p>在此输入内容:</p>
+    	<p>姓名:
+    	    <input type="text" ng-model="name">
+    	</p>
+    	<p>{{name}}</p>
+	</div>
+	<script src="js/angular.js"></script>
+	ng-app:		告诉AngularJS,div元素是AngularJS,div是ag应用			程序管理的边界
+	ng-model		双向数据绑定指令,效果是将当前元素的value和模型			中的username建立绑定关系
+	.directive	给模块添加自定义指令,命名方法是驼峰命名法,
+			app.directive("runoobDirective",function () {
+            	return {
+					restrict: "E/A/C/M",
+            	    template: "<p>我是babyLove</p>"
+            	}
+        	})	使用时直接在页面中使用runoobDirective,但驼峰改	为由"-"分隔开;
+				自定义指令可以由"元素名"、"属	性"、"类明"和"注释"来达到输出效果;
+				自定义指令可以通过restrict来控制在哪些方式生效--E:作为元素生效;
+					A:作为属性生效;
+					C:作为类名使用生效;
+					M:作为注释使用生效
+				restrict的默认值是"EA",即通过元素名和属性来调用指令
+	var app = angular.module("myApp",[]).directive				("first",function () {
+            return {
+                scope: false,           //默认值,共享父级作用域,属性值可以在下面的controller中修改
+                controller: function ($scope,$element,$attrs,$transclude) {
+                    $scope.name = "jack";
+                },
+                restrict: "EA",
+                template: "<p>firstContent:{{name}}</p>"  //template中可以放表达式来绑定数据
+            }
+        }).directive("second",function () {
+            return {
+                scope: true,             //继承父级作用域并创建指令自己的作用域
+                controller: function ($scope,$element,$attrs,$transclude) {
+                    //当在这里的controller中修改name时,second会在自己的作用域中创建一个新的name变量,与父级作用域中的name相独立,当父级中的name修改时,不影响此处的name
+                    $scope.name = "jack";
+                },
+                restrict: "EA",
+                template: "<p>secondContent:{{name}}</p>"
+            }
+        }).directive("third",function () {
+            return {
+                scope: {},                //创建指令自己的作用域,与父级毫无关系,无法继承父级的属性
+                controller: function ($scope,$element,$attrs,$transclude) {
+                    //在该区域中添加属性,与父级的属性无关
+                    $scope.name = "jack";
+                },
+                restrict: "EA",
+                template: "<p>secondContent:{{name}}</p>"
+            }
+        }).controller('myController',['$scope',function ($scope) {
+            $scope.name = "Mike";
+            $scope.firstname = "jack";
+            $scope.lastname = "chen";
+            $scope.myArr = [
+                {
+                    "name": "username1",
+                    "age": "10",
+                    "nameAndAge" : function () {
+                        return this.name + " " + this.age;
+                    }
+                },
+                {
+                    "name": "username2",
+                    "age": "12",
+                    "nameAndAge" : function () {
+                        return this.name + " " + this.age;
+                    }
+                },
+                {
+                    "name": "username3",
+                    "age": "16",
+                    "nameAndAge" : function () {
+                        return this.name + " " + this.age;
+                    }
+                }
+            ]
+        }])
+	{{name}}	表达式就是把应用程序变量name绑定到某个段落的innerHTML	默认的是双向绑定;单向绑定是{{::name}}
+	ng-controller	当前元素交给控制器控制
+	ng-cloak		斗篷 页面加载时,有表达式的标签会先出现表达式,然			后再代入数据,而angular为了改善效果,加了ng-				cloak,但是效果不行,所以我们可以选择ng-cloak的			类名给他加个样式隐藏;因为angular为了消除加载时			出现表达式的情况,会给表达式的标签加上ng-cloak这			个类名,然后去除掉,所以可以使用添加隐藏样式的方法			来解决加载出现表达式的现象或者给表达式的标签加上			ng-cloak类名,然后加上db也行
+	ng-bind		当给元素标签加上这个指令时,相当于在标签中加入了			一个表达式{{}},但是不会出现渲染出{{}}的问题;当			指令添加的是HTML时,会自动转义,目的是为了安全.防			止跨站脚本攻击
+	ng-bind-html	这个指令是绑定HTML,同时要去引入angular的另一个			包(angular-sanitize.js),然后再写一个script来			将上面的js模块引入自己的模块中angular.module			(自己的模块名,["ngSanitize"]);但是不建议去使用
+	ng-repeat	这个指令用于循环生成元素并绑定数据
 				内部还拥有:item(相应的对象);$first(当是第一个元素时,值为true);$index(当前元素的序列号);$last(当是最后一个元素时,值为true);$even(奇数时,值为true);$odd(偶数时,值为true)
-注:当ng-repeat遇到相同数据绑定时
-	使用track by $index 如:item in students track by $index来将重复的数据添加到标签内
-	item.startsWith() 以...开头的item
-<body ng-app="myApp">
-<ul ng-controller="listApp">
-    <li data-id="{{item.id}}" ng-repeat="item in sList">
-        <strong>{{item.name}}</strong>
-        <span>{{item.age}}</span>
-    </li>
-</ul>
-<script src="js/angular.min.js"></script>
-<script>
+				当循环的数组中是字符时,ng-repeat="x in arr",获取数据用表达式来获取({{x}});当循环的是数组中是对象时,ng-repeat="item in arr",获取数据用item.属性名的形式来获取
+	注:当ng-repeat遇到相同数据绑定时
+		使用track by $index 如:item in students track by $index来将重复的数据添加到标签内
+		item.startsWith() 以...开头的item
+	<body ng-app="myApp">
+	<ul ng-controller="listApp">
+    	<li data-id="{{item.id}}" ng-repeat="item in sList">
+       		<strong>{{item.name}}</strong>
+        	<span>{{item.age}}</span>
+		</li>
+	</ul>
+	<script src="js/angular.min.js"></script>
+	<script>
     var myApp = angular.module("myApp",[]);
     myApp.controller("listApp",["$scope",function ($scope) {
         $scope.sList = [];
@@ -1269,27 +1396,27 @@ ng-repeat		这个指令用于循环生成元素并绑定数据
                 age: 10 + i,
             })
             //或者用下面的方式添加数组对象
-//            $scope.sList[$scope.sList.length] = {
-//                id: i,
-//                name: "我的天" + i,
-//                age: 10 + i,
-//            }
-        }
-    }])
-</script>
-</body>
-将两个模块组装成一个新的模块:
+	//		$scope.sList[$scope.sList.length] = {
+	//      	id: i,
+	//      	name: "我的天" + i,
+	//          age: 10 + i,
+	//      	}
+      	  	}
+		}])
+	</script>
+	</body>
+	将两个模块组装成一个新的模块:
 	angular.bootstrap(DOM对象,[对应的模块名])				
 		这种方法标签中共有两个(ng-app=第一个模块名;ng-app=第二个模块名);DOM对象用document.querySelector()方法获取
-<body>
-<div ng-app="myApp1" ng-controller="app1">
+	<body>
+	<div ng-app="myApp1" ng-controller="app1">
     <input type="button" value="点击1" ng-click="do1()">
-</div>
-<div ng-app="myApp2" ng-controller="app2">
+	</div>
+	<div ng-app="myApp2" ng-controller="app2">
     <input type="button" value="点击2" ng-click="do2()">
-</div>
-<script src="js/angular.min.js"></script>
-<script>
+	</div>
+	<script src="js/angular.min.js"></script>
+	<script>
     var myApp1 = angular.module("myApp1", []);
     myApp1.controller("app1", ["$scope", function ($scope) {
         $scope.do1 = function () {
@@ -1303,18 +1430,18 @@ ng-repeat		这个指令用于循环生成元素并绑定数据
         }
     }]);
     angular.bootstrap(document.querySelector('[ng-app="myApp2"]'), ['myApp2']);
-</script>
-</body>
+	</script>
+	</body>
 	angular.module(新的模块名,[第一个模块名,第二个模块名])		这种方式标签中只有一个ng-app=新的模块名
-<body ng-app="mod">
-<div ng-controller="app1">
+	<body ng-app="mod">
+	<div ng-controller="app1">
     <input type="button" value="点击1" ng-click="do1()">
-</div>
-<div ng-controller="app2">
+	</div>
+	<div ng-controller="app2">
     <input type="button" value="点击2" ng-click="do2()">
-</div>
-<script src="js/angular.min.js"></script>
-<script>
+	</div>
+	<script src="js/angular.min.js"></script>
+	<script>
     var myApp1 = angular.module("mod1",[]);
     myApp1.controller("app1",["$scope",function ($scope) {
         $scope.do1 = function () {
@@ -1328,14 +1455,26 @@ ng-repeat		这个指令用于循环生成元素并绑定数据
         }
     }]);
     angular.module("mod",["mod1","mod2"]);
-</script>
-</body>
-```
+	</script>
+	</body>
+	$scope		这是个模型(model),是一个js对象,带有属性和方法,			可以在视图(view)和控制器(controller)中使用,作			用范围是定义的控制器控制的范围
+	$rootScope	可以作用于ng-app指令包含的所有HTML元素中,可用于			整个应用中,能在各个controller中使用,使用时和			scope一样需要注入controller中;此模型可以将数据			注入到ng-repeat中,说明它可以在任何作用域中起作			用,可用于ng-repeat的内外循环中都可以用
+	输入过滤		使用输入过滤时,用到ng-repeat,过滤器filter写在			item in persons 的后面如:ng-repeat="item in 			persons | filter:test | orderBy:country",			然后有个<input type="text" ng-						model="test">,这样当在input中输入值时,底下				repeat的部分可以根据country来过滤显示
+	$timeout	和$scope一样需要注入,使用时$timeout(function			(){},毫秒数),xx毫秒后执行函数
+	$http		$http.get("请求页面").then(function					(response){
+				$scope.responseDta = response.data
+					})
+	选择框option	<select ng-model="selectedName" ng-					init="selectedName=arr[0]" ng-options="x 			for x in arr">
+    			{{x}}
+				</select>
+	$scope.arr = ["111","222","333"];
+
 - 模块和控制器
-```css
-			<!-- ng-app划分ng的控制区域 
-	 		ng-controller给这个控制区域加上一个控制器
-			-->
+
+---
+	<!-- ng-app划分ng的控制区域 
+		ng-controller给这个控制区域加上一个控制器
+		-->
 	<div ng-app='myApp' ng-controller = 'DemoController'>
 		<p>在此输入内容:</p>
 		<p>姓名:
@@ -1364,13 +1503,12 @@ ng-repeat		这个指令用于循环生成元素并绑定数据
 			}
 		})
 	</script>
-注意:
+	注意:
 	app.controller('DemoController',function ($scope) {})这种形式来写在代码压缩的时候会出现问题,代码压缩的时候会将变量改成另一个字符,此时,angular中控制器后面的函数就不认识那个变量,导致报错
 	解决方法:
 	将控制器函数的第二个参数以数组的形式来传递,函数放在数组最后
 		一般在生产环境中使用这种方法;
 	app.controller('DemoController',['$scope','$http',function (a,b) {}])
-```
 
 # node
 
@@ -1460,7 +1598,7 @@ cd :change directory
 
 ### 1.什么是NPM
 
-https://www.npmjs.com/
+[https://www.npmjs.com/](https://www.npmjs.com/)
 - Node Package Manager
 - Node应用程序依赖包的管理工具
 - 安装卸载更新之类的操作
@@ -1598,9 +1736,8 @@ git reset --hard
 
 ### 2.GITHUB基本使用
 
-- https://github.com/
+- [https://github.com/](https://github.com/)
 - GITHUB是一个GIT服务的提供商，
-- 
 - 提出社交化编程
 
 http://zoomzhao.github.io/code-guide/
@@ -1699,7 +1836,7 @@ C:\Users\Ray丶X\AppData\Roaming\npm
     - 直接将编译好的css文件引入
 
 ```
-        <link rel="stylesheet" href="less/main.css">
+   <link rel="stylesheet" href="less/main.css">
 ```
 
 # php
