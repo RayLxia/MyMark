@@ -53,6 +53,53 @@
 	去掉图标的默认光泽效果
 	<link rel="apple-touch-icon-precomposed" href="touch-icon-iphone.png" />
 
+## 4.适配移动端的字体设置
+
+[http://caibaojian.com/mobile-responsive-example.html](http://caibaojian.com/mobile-responsive-example.html)
+
+-	（1）先拿设计稿竖着的横向分辨率除以100得到body元素的宽度：
+	-	如果设计稿基于iphone6，横向分辨率为750，body的width为750 / 100 = 7.5rem
+	-	如果设计稿基于iphone4/5，横向分辨率为640，body的width为640 / 100 = 6.4rem
+
+-	（2）布局时，设计图标注的尺寸除以100得到css中的尺寸
+	-	高度为210px，写样式的时候css应该这么写：height: 2.1rem。之所以取一个100作为参照，就是为了这里计算rem的方便！
+	
+-	（3）在dom ready以后，通过以下代码设置html的font-size:
+
+---
+	document.documentElement.style.fontSize = document.documentElement.clientWidth / 6.4 + 'px';	
+	如果是640的稿子那么除以的就是6.4
+	如果是750的稿子那么除以的就是7.5
+
+-	（4）font-size可能需要额外的媒介查询，并且font-size不能使用rem，如网易的设置：
+
+---
+	@media screen and (max-width:321px){
+    	.m-navlist{font-size:15px}
+	}
+
+	@media screen and (min-width:321px) and (max-width:400px){
+    	.m-navlist{font-size:16px}
+	}
+
+	@media screen and (min-width:400px){
+    	.m-navlist{font-size:18px}
+	}
+
+-	注意
+
+	-	第一，如果采用网易这种做法，视口要如下设置：
+
+---
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
+
+	-	第二，当deviceWidth大于设计稿的横向分辨率时，html的font-size始终等于横向分辨率/body元素宽
+
+---
+	var deviceWidth = document.documentElement.clientWidth;
+	if(deviceWidth > 640) deviceWidth = 640;
+	document.documentElement.style.fontSize = deviceWidth / 6.4 + 'px';	
+
 # 轮播图
 
 ## 1.轮播图特效的两种方式
