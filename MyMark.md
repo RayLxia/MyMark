@@ -1418,12 +1418,36 @@ i:	表示不区分大小写 /a/i,表示"a"或"A"都满足条件
 	ng-cloak		斗篷 页面加载时,有表达式的标签会先出现表达式,然			后再代入数据,而angular为了改善效果,加了ng-				cloak,但是效果不行,所以我们可以选择ng-cloak的			类名给他加个样式隐藏;因为angular为了消除加载时			出现表达式的情况,会给表达式的标签加上ng-cloak这			个类名,然后去除掉,所以可以使用添加隐藏样式的方法			来解决加载出现表达式的现象或者给表达式的标签加上			ng-cloak类名,然后加上db也行
 	ng-bind		当给元素标签加上这个指令时,相当于在标签中加入了			一个表达式{{}},但是不会出现渲染出{{}}的问题;当			指令添加的是HTML时,会自动转义,目的是为了安全.防			止跨站脚本攻击
 	ng-bind-html	这个指令是绑定HTML,同时要去引入angular的另一个			包(angular-sanitize.js),然后再写一个script来			将上面的js模块引入自己的模块中angular.module			(自己的模块名,["ngSanitize"]);但是不建议去使用
+	ng-switch	用ng-model将select和目标区域绑定,由ng-switch-when来根据select中option的value来显示对应需要的内容
+	<select ng-model="myV">
+    	<option value="1">1</option>
+    	<option value="2">2</option>
+    	<option value="3">3</option>
+	</select>
+	<div ng-switch="myV">
+    	<div ng-switch-when="1">
+    	    <h2>标题一</h2>
+    	    <span>内容一</span>
+    	</div>
+    	<div ng-switch-when="2">
+    	    <h2>标题二</h2>
+    	    <span>内容二</span>
+    	</div>
+    	<div ng-switch-when="3">
+    	    <h2>标题三</h2>
+    	    <span>内容三</span>
+    	</div>
+    	<div ng-switch-default>
+    	    <h2>标题四</h2>
+    	    <span>内容四</span>
+    	</div>
+	</div>
 	ng-repeat	这个指令用于循环生成元素并绑定数据
 				内部还拥有:item(相应的对象);$first(当是第一个元素时,值为true);$index(当前元素的序列号);$last(当是最后一个元素时,值为true);$even(奇数时,值为true);$odd(偶数时,值为true)
 				当循环的数组中是字符时,ng-repeat="x in arr",获取数据用表达式来获取({{x}});当循环的是数组中是对象时,ng-repeat="item in arr",获取数据用item.属性名的形式来获取
 	注:当ng-repeat遇到相同数据绑定时
-		使用track by $index 如:item in students track by $index来将重复的数据添加到标签内
-		item.startsWith() 以...开头的item
+	使用track by $index 如:item in students track by $index来将重复的数据添加到标签内
+	item.startsWith() 		以...开头的item
 	<body ng-app="myApp">
 	<ul ng-controller="listApp">
     	<li data-id="{{item.id}}" ng-repeat="item in sList">
@@ -1508,6 +1532,28 @@ i:	表示不区分大小写 /a/i,表示"a"或"A"都满足条件
 	$rootScope	可以作用于ng-app指令包含的所有HTML元素中,可用于			整个应用中,能在各个controller中使用,使用时和			scope一样需要注入controller中;此模型可以将数据			注入到ng-repeat中,说明它可以在任何作用域中起作			用,可用于ng-repeat的内外循环中都可以用
 	输入过滤		使用输入过滤时,用到ng-repeat,过滤器filter写在			item in persons 的后面如:ng-repeat="item in 			persons | filter:test | orderBy:country",			然后有个<input type="text" ng-						model="test">,这样当在input中输入值时,底下				repeat的部分可以根据country来过滤显示
 	$timeout	和$scope一样需要注入,使用时$timeout(function			(){},毫秒数),xx毫秒后执行函数
+	<script type="text/javascript">
+		var myApp = angular.module("myApp",[]);
+		myApp.controller("firstController",[
+			"$scope",
+			"$timeout",
+			function($scope,$timeout){
+			/*第一种定时器方法,要将变化的内容写在$apply方法中
+			setTimeout(function () {
+				$scope.$apply(function () {
+					$scope.name = "lisi";
+				})
+			},2000)
+			*/
+			/*第二种方法
+			* 直接传入参数$timeout
+			* */
+			$timeout(function () {
+				$scope.name = "lisi";
+			},2000)
+			$scope.name = "zhangsan"
+		}])
+	</script>
 	$http		$http.get("请求页面").then(function					(response){
 				$scope.responseDta = response.data
 					})
