@@ -7,6 +7,8 @@
 	<script src="//cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
 	<script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
+	html5shiv.js		让ie9以下版本的浏览器识别html5标签
+	respond.js			让ie9以下版本的浏览器能够使用媒体查询
 
 ## bootstrap中文网cdn
 
@@ -55,6 +57,8 @@
 
 ## 4.适配移动端的字体设置
 
+### 1.方法一
+
 [http://caibaojian.com/mobile-responsive-example.html](http://caibaojian.com/mobile-responsive-example.html)
 
 -	（1）先拿设计稿竖着的横向分辨率除以100得到body元素的宽度：
@@ -99,6 +103,50 @@
 	var deviceWidth = document.documentElement.clientWidth;
 	if(deviceWidth > 640) deviceWidth = 640;
 	document.documentElement.style.fontSize = deviceWidth / 6.4 + 'px';	
+
+### 方法二
+
+This is an [example link](http://www.imooc.com/article/1115)
+
+---
+	html {
+		font-size:10px
+	} 
+	@media screen and (min-width:480px) and (max-width:639px) { 
+		html { 
+			font-size: 15px 
+		} 
+	} 
+	@media screen and (min-width:640px) and (max-width:719px) { 
+		html { 
+			font-size: 20px 
+		} 
+	} 
+	@media screen and (min-width:720px) and (max-width:749px) { 
+		html { 
+			font-size: 22.5px 
+		} 
+	} 
+	@media screen and (min-width:750px) and (max-width:799px) { 
+		html { 
+			font-size: 23.5px 
+		} 
+	} 
+	@media screen and (min-width:800px) and (max-width:959px) { 
+		html { 
+			font-size: 25px 
+		} 
+	} 
+	@media screen and (min-width:960px) and (max-width:1079px) { 
+		html { 
+			font-size: 30px 
+		} 
+	} 
+	@media screen and (min-width:1080px) { 
+		html { 
+			font-size: 32px 
+		} 
+	}
 
 # 轮播图
 
@@ -329,7 +377,7 @@ function loadXMLDoc(){
   		if (xmlhttp.readyState==4 && xmlhttp.status==200){
     		xmlDoc=xmlhttp.responseXML;
     		txt="";
-		    x=xmlDoc.getElementsByTagName("title");
+		    x=xmlDoc.getElementsByTagName("book");
    			for (i=0;i<x.length;i++){
    				txt=txt + x[i].childNodes[0].nodeValue + "<br />";
       		}
@@ -957,6 +1005,36 @@ var film = {
 		- 作用:
 			1.借用另一个对象的方法,而不用拷贝
 			2.将伪数组改成真数组
+
+---
+	function Animal(){    
+    	this.name = "Animal";    
+		this.showName = function(){    
+      	  alert(this.name);    
+    	}    
+	}    
+	function Cat(){    
+    	this.name = "Cat";    
+	}    
+	var animal = new Animal();    
+	var cat = new Cat();    
+	//通过call或apply方法，将原本属于Animal对象的showName()方法交给对象cat来使用了。    
+	//输入结果为"Cat"    	
+	animal.showName.call(cat,",");    
+	//animal.showName.apply(cat,[]);
+
+	function Animal(name){      
+    	this.name = name;      
+    	this.showName = function(){      
+        	alert(this.name);      
+    	}      
+	}       
+	function Cat(name){    
+    	Animal.call(this, name);    
+	}          
+	var cat = new Cat("Black Cat");     
+	cat.showName();  
+	Animal.call(this) 的意思就是使用 Animal对象代替this对象，那么 Cat中不就有Animal的所有属性和方法了吗，Cat对象就能够直接调用Animal的方法以及属性了.
 
 #### 2.伪数组
 
@@ -1991,11 +2069,11 @@ C:\Users\Ray丶X\AppData\Roaming\npm
 	- $_POST接收 post 传值
 	- $_FILES接收文件上传
 
-#css问题
+# css问题
 
 解绑hover事件,使用jQuery的 jQuery对象.unbind("mouseenter mouseleave")即可;
 
-#移动web常出现的问题及解决方案
+# 移动web常出现的问题及解决方案
 
 ## 1.安卓浏览器看背景图片，有些设备会模糊
 
@@ -2175,47 +2253,3 @@ user-scalable=0,有的人也写成user-scalable=no
 	$(sltElement).trigger("mousedown");
 ```
 
-## 14.适配各种手机端的字体单位
-
-### 网页链接
-This is an [example link](http://www.imooc.com/article/1115)
-```css
-	html {
-		font-size:10px
-	} 
-	@media screen and (min-width:480px) and (max-width:639px) { 
-		html { 
-			font-size: 15px 
-		} 
-	} 
-	@media screen and (min-width:640px) and (max-width:719px) { 
-		html { 
-			font-size: 20px 
-		} 
-	} 
-	@media screen and (min-width:720px) and (max-width:749px) { 
-		html { 
-			font-size: 22.5px 
-		} 
-	} 
-	@media screen and (min-width:750px) and (max-width:799px) { 
-		html { 
-			font-size: 23.5px 
-		} 
-	} 
-	@media screen and (min-width:800px) and (max-width:959px) { 
-		html { 
-			font-size: 25px 
-		} 
-	} 
-	@media screen and (min-width:960px) and (max-width:1079px) { 
-		html { 
-			font-size: 30px 
-		} 
-	} 
-	@media screen and (min-width:1080px) { 
-		html { 
-			font-size: 32px 
-		} 
-	}
-```
