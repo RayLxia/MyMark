@@ -33,6 +33,40 @@
 	!window.jQuery && document.write(unescape("%3Cscript src='/jQuery/jquery-1.9.0.min.js' type='text/javascript'%3E%3C/script%3E")
 	); //-->
 
+# 导航样式随动处理
+
+## 1.给每个导航加上自己的id
+
+---
+	<ul>
+		<li id="menu_index"><a class="active" href="/">首页</a></li>
+		<li id="menu_3" class="item-active"><a href="/plus/list.php?tid=3">找场地</a></li>
+        <li id="menu_7"><a href="/service">服务项目</a></li>
+        <li id="menu_4"><a href="/scheme">会议剪影</a></li>
+        <li id="menu_5"><a href="/strategy">会议攻略</a></li>
+        <li id="menu_2"><a href="/introduction">关于我们</a></li>
+	</ul>
+
+## 2.写一个方法,用来判断当前页面的id并控制导航样式
+
+---
+	function menu_selected(id){
+		if(id=='2' ||id=='3' || id=='4' || id=='5' || id=='6' || id=='7'){
+			$('#menu_'+id).addClass('item-active');
+		}else{
+			$('#menu_index').addClass('item-active');	
+		}	
+	}
+
+## 3.将导航对应的页面id传入到写好的方法中
+
+---
+	<script>
+	$(document).ready(function(){
+		menu_selected('3');
+	})
+	</script>
+
 # 移动端head需要引入的meta和link
 
 ## 1.顶部状态栏背景色(下方有详细说明)
