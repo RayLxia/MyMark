@@ -1333,6 +1333,100 @@ var str = ""会自动转换成String对象,具体在什么时候转换要看浏�
 - 表达式 var fn2 = new Function(){}  	函数表达式不可以提升
 我们定义一个函数表达式时,在这个表达式之前是访问不到的
 
+## 13.一些常见的对象及方法
+
+### 1.console对象
+[https://segmentfault.com/a/1190000004528137](https://segmentfault.com/a/1190000004528137)
+
+---
+	log()			用于控制台输出,可接受多个参数
+	info()/debug()	与log()方法用法一样
+					info()方法在输出时,输出的信息之前会有蓝色的图标
+	warn()			输出的信息之前有黄色警告图标
+	error()			输出的信息之前有红色出错图标
+	table()			将复合型数据转换为table表格的形式
+	如:
+		var languages = [
+ 		{ name: "JavaScript", fileExtension: ".js" },
+  		{ name: "TypeScript", fileExtension: ".ts" },
+  		{ name: "CoffeeScript", fileExtension: ".coffee" }
+		];	
+		console.table(languages);
+	控制台输出:
+	index   name                fileExtension
+	0		JavaScript			.js
+	1		TypeScript			.ts
+	2		CoffeeScript		.coffee
+	或:
+		var languages = {
+  		csharp: { name: "C#", paradigm: "object-oriented" },
+  		fsharp: { name: "F#", paradigm: "functional" }
+		};
+		console.table(languages);
+	控制台输出:
+	index   name                paradigm
+	csharp	C#					object-oriented
+	fsharp	F#					functional
+
+	count()			用于计数术,输出对应方法被调用的次数
+	如:	
+		function greet(user) {
+  			console.count();
+  			return "hi " + user;
+		}
+		greet('bob')
+		//  : 1
+		// "hi bob"
+		greet('alice')
+		//  : 2
+		// "hi alice"
+		greet('bob')
+		//  : 3
+		// "hi bob"
+
+	dir()			可以将一个对象输出到控制台中,比log信息更多
+	assert()		接受两个参数,第一个参数为false,才会输出第二				个参数
+	如:
+		console.assert(true === false, "判断条件不成立")
+		// Assertion failed: 判断条件不成立
+
+	time()/timeEnd()配合使用算出一个操作所花费的准确时间
+	如:
+		console.time("Array initialize");//计时开始
+		var array= new Array(1000000);
+		for (var i = array.length - 1; i >= 0; i--) {
+    	array[i] = new Object();
+		};
+		console.timeEnd("Array initialize");//计时结束
+		// Array initialize: 1914.481ms		输出结果
+
+	profile()/profileEnd()	配合使用可以测试一个文件的性能
+	如:
+		测试开始
+		console.profile('p')
+		// Profile 'p' started.
+		测试结束
+		console.profileEnd()
+		// Profile 'p' finished.
+	
+	debugger			该语句必须配合出错工具使用
+	如:
+		for(var i = 0;i<5;i++){
+			console.log(i);
+    		if (i===2) debugger;
+		}
+	当输出0,1,2之后跳入sources界面,类似于设置断点
+
+	monitorEvents(object[, events])/unmonitorEvents(object[, events])			监听/停止监听特定对象上发生的特定事件
+	如:
+		monitorEvents(window, "resize");
+		monitorEvents(window, ["resize", "scroll"])
+	事件的四大类
+	mouse：”mousedown”, “mouseup”, “click”, “dblclick”, “mousemove”, “mouseover”, “mouseout”, “mousewheel”
+	key：”keydown”, “keyup”, “keypress”, “textInput”
+	touch：”touchstart”, “touchmove”, “touchend”, “touchcancel”
+	control：”resize”, “scroll”, “zoom”, “focus”, “blur”, “select”, “change”, “submit”, “reset”
+
 # 检测数据类型
 
 ## 1.typeof	
